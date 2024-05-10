@@ -1,11 +1,11 @@
 @font-face {
 	font-family: Prisma;
-	src: url('fonts/Prisma.otf');
+	src: url('../fonts/Prisma.otf');
 }
 
 @font-face {
 	font-family: Bebas;
-	src: url('/fonts/BebasNeue.otf');
+	src: url('../fonts/BebasNeue.otf');
 }
 
 body, html {
@@ -27,7 +27,7 @@ input {
 }
 
 #indexBody {
-	background-image: url("/img/concert.jpg");
+	background-image: url("../img/concert.jpg");
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
