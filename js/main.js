@@ -39,7 +39,7 @@ $(document).ready(function(){
 			},
 			success: function (data) {
 				if (data.result == 0) {
-					alert("Server Error: please contact Neema");
+					alert("Server Error: please contact Big Tuna");
 				}
 				else {
 					sessionStorage.plan = plan;
@@ -66,7 +66,7 @@ $(document).ready(function(){
 			},
 			success: function (data) {
 				if (data == 0) {
-					alert("Server Error: please contact Neema");
+					alert("Server Error: please contact Big Tuna");
 				}
 				else {
 					sessionStorage.plan = plan;
@@ -96,7 +96,7 @@ $(document).ready(function(){
 			success: function(data){
 
 				if (data.result == 0) {
-							alert("Server Error: please contact Neema");
+							alert("Server Error: please contact Big Tuna");
 				}
 				else if (data.result == 2) {
 					alert("Invalid credentials. Please try again.");
