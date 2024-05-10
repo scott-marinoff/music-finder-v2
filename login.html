@@ -5,7 +5,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
 <meta http-equiv="Pragma" content="no-cache"/>
 <meta http-equiv="Expires" content="0"/>
-	<title>Music Finder</title>
+	<title>Music Finder | Login</title>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<script type="text/javascript" src="js/config.js"></script>
 	<script type="text/javascript" src="js/mixpanel-library.js"></script>
@@ -13,15 +13,24 @@
 	<script type="text/javascript" src="js/main.js"></script>
 	<link rel="stylesheet" href="css/main.css">
 </head>
-<body id="indexBody">
+<body>
 	<header>
 		<div class="leftContainer">
-			<span id="logo">Music Finder</span> brought to you by <a id="mixpanelLink" href="#">Mixpanel</a>
-		</div>
-		<div class="rightContainer">
-			<span><a href="signup.html">Signup</a></span>
-			<span><a href="login.html">Login</a></span>
+			<a href="index.html"><span id="logo">Music Finder</span></a> brought to you by <a id="mixpanelLink" href="#">Mixpanel</a>
 		</div>
 	</header>
+	<div id="mainContainer">
+		<div class="form">
+			<div class="formRow">
+				<label for="email">Email: </label><input type="text" name="email" id="email" autocomplete="off" spellcheck="false">
+			</div>
+			<div class="formRow">
+				<label for="password">Password: </label><input type="password" name="password" id="password">
+			</div>
+			<div class="center">
+				<button id="loginButton">Login</button>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
