@@ -65,9 +65,9 @@ function login(user) {
 function songPlayed(song) {
 
 	// Set a 'Songs Played' count Super Property
-	var songsPlayed = mixpanel.get_property('Songs Played (Session)')
+	var songsPlayed = mixpanel.get_property('Songs Played (Session)');
 
-	if (songsPlayed == 'undefined') {
+	if (songsPlayed === 'undefined') {
 		mixpanel.register_once({
 			"Songs Played (Session)": 1
 		});
@@ -104,7 +104,7 @@ function songPurchased(song) {
 	var purchasedProperty = "Songs Purchased (Session)";
 	var songsPurchased = mixpanel.get_property(purchasedProperty);
 
-	if (songsPurchased == 'undefined') {
+	if (songsPurchased === 'undefined') {
 		mixpanel.register_once({
 			purchasedProperty : 1,
 			"Total Spent (Session)" : song.price
