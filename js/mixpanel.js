@@ -1,5 +1,6 @@
 // This function executes when a user loads the sign up page
 function signupPageViewed() {
+	
 	// Set a 'Signup Page Views' count Super Property
 	var pagesViewed = mixpanel.get_property('Signup Page Views (Session)')
 
@@ -20,10 +21,11 @@ function signupPageViewed() {
 // The "user" object contains the following properties: name, email, favorite_genre, plan, id
 // e.g. calling user.id will return the user's id
 function accountCreated(user) {
+
 	mixpanel.identify(user.id);
 
 	const currentDate = new Date();
-	const timestamp = currentDate.getTime();
+	const timestamp = currentDate.toISOString();
 
 	mixpanel.people.set({
 		"$name" : user.name,
@@ -49,6 +51,7 @@ function accountCreated(user) {
 // The "user" object contains the following properties: name, email, favorite_genre, plan, id
 // e.g. calling user.id will return the user's id
 function login(user) {
+
 	mixpanel.identify(user.id);
 
 	mixpanel.register({
@@ -73,15 +76,16 @@ function logout() {
 function songPlayed(song) {
 
 	// Set a 'Songs Played' count Super Property
-	var songsPlayed = mixpanel.get_property('Songs Played (Session)');
+	var purchasedProperty = "Songs Played (Session)";
+	var songsPlayed = mixpanel.get_property(${purchasedProperty});
 
 	if (songsPlayed === 'undefined') {
 		mixpanel.register_once({
-			"Songs Played (Session)": 1
+			${purchasedProperty} : 1
 		});
 	} else {
 		mixpanel.register({
-			"Songs Played (Session)": songsPlayed + 1
+			${purchasedProperty} : songsPlayed + 1
 		});
 	};
 
@@ -89,7 +93,7 @@ function songPlayed(song) {
 		"Songs Played" : 0
 	});
 
-	mixpanel.people.increment("Songs Played", 1)
+	mixpanel.people.increment("Songs Played", 1);
 
 	mixpanel.track("Played Song",{
 		"Title" : song.title,
@@ -108,18 +112,18 @@ function songPlayed(song) {
 // e.g. calling song.title will return the song's title
 function songPurchased(song) {
 
-	// Set a 'Songs Played' count Super Property
+	// Set a 'Songs Purchased' count Super Property
 	var purchasedProperty = "Songs Purchased (Session)";
-	var songsPurchased = mixpanel.get_property('Songs Purchased (Session)');
+	var songsPurchased = mixpanel.get_property(${purchasedProperty});
 
 	if (songsPurchased === 'undefined') {
 		mixpanel.register_once({
-			purchasedProperty : 1,
+			${purchasedProperty} : 1,
 			"Total Spent (Session)" : song.price
 		});
 	} else {
 		mixpanel.register({
-			purchasedProperty : songsPurchased + 1,
+			${purchasedProperty} : ${songsPurchased} + 1,
 			"Total Spent (Session)" : mixpanel.get_property('Total Spent (Session)') + song.price
 		});
 	};
@@ -146,7 +150,7 @@ function songPurchased(song) {
 function planUpgraded() {
 	
 	const currentDate = new Date();
-	const timestamp = currentDate.getTime();
+	const timestamp = currentDate.toISOString();
 
 	mixpanel.track("Upgraded Plan",{
 		"Previous Plan" : mixpanel.get_property('Plan')
@@ -175,7 +179,7 @@ function planUpgraded() {
 function planDowngraded() {
 	
 	const currentDate = new Date();
-	const timestamp = currentDate.getTime();
+	const timestamp = currentDate.toISOString();
 
 	mixpanel.track("Downgraded Plan",{
 		"Previous Plan" : mixpanel.get_property('Plan')
