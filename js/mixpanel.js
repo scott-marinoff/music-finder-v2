@@ -36,7 +36,7 @@ function accountCreated(user) {
 	});
 
 	mixpanel.people.union({
-		"Genres" : user.favorite_genre
+		"Genres Played" : user.favorite_genre
 	});
 
 	mixpanel.register({
@@ -65,7 +65,7 @@ function login(user) {
 // This function executes when a user successfully logs out
 // It clears super properties from the Mixpanel cookie
 function logout() {
-	
+
 	mixpanel.track("Logged Out");
 	mixpanel.reset();
 }
@@ -118,18 +118,21 @@ function songPlayed(song) {
 function songPurchased(song) {
 
 	// Set a 'Songs Purchased' count Super Property
+	// ** FIX ** For some reason, this doesn't seem to be working...
 	let purchasedProperty = "Songs Purchased (Session)";
+	console.log(purchasedProperty);
 	let songsPurchased = mixpanel.get_property(purchasedProperty);
+	console.log(songsPurchased);
 
 	// Add Songs Purchased and Total Spent as Super Properties
-	if (songsPurchased === 'undefined') {
+	if (mixpanel.get_property("Songs Purchased (Session)"); === 'undefined') {
 		mixpanel.register_once({
-			purchasedProperty : 1,
+			"Songs Purchased (Session)" : 1,
 			"Total Spent (Session)" : song.price
 		});
 	} else {
 		mixpanel.register({
-			purchasedProperty : purchasedProperty + 1,
+			"Songs Purchased (Session)" : mixpanel.get_property("Songs Purchased (Session)") + 1,
 			"Total Spent (Session)" : mixpanel.get_property('Total Spent (Session)') + song.price
 		});
 	};
