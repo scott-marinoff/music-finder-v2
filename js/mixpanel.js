@@ -13,7 +13,7 @@ function signupPageViewed() {
 		});
 	}
 
-	mixpanel.track("Viewed Signup Page")
+	mixpanel.track("Viewed Signup Page");
 }
 
 // This function executes after a user successfully signs up
@@ -29,7 +29,7 @@ function accountCreated(user) {
 		"$name" : user.name,
 		"$email" : user.email,
 		"$created" : timestamp,
-		"Plan" : user.plan
+		"Plan" : user.plan,
 		"Preferred Genre" : user.favorite_genre
 	});
 
@@ -42,9 +42,7 @@ function accountCreated(user) {
 		"Preferred Genre" : user.favorite_genre
 	});
 
-	mixpanel.track("Created Account",{
-		
-	});
+	mixpanel.track("Created Account");
 }
 
 // This function executes when a user successfully logs in
@@ -53,19 +51,23 @@ function accountCreated(user) {
 function login(user) {
 	mixpanel.identify(user.id);
 
-	mixpanel.track("Logged In",{
-		"Plan" : user.plan
+	mixpanel.register({
+		"Plan" : user.plan,
+		"Preferred Genre" : user.favorite_genre
 	});
+
+	mixpanel.track("Logged In");
 }
 
 // This function executes every time a song is played
 // The "song" object contains the following properties: title, artist, genre, duration
 // e.g. calling song.title will return the song's title
 function songPlayed(song) {
+
 	// Set a 'Songs Played' count Super Property
 	var songsPlayed = mixpanel.get_property('Songs Played (Session)')
 
-	if (songsPlayed !== 'undefined') {
+	if (songsPlayed == 'undefined') {
 		mixpanel.register_once({
 			"Songs Played (Session)": 1
 		});
@@ -97,43 +99,92 @@ function songPlayed(song) {
 // The "song" object contains the following properties: title, artist, genre, duration, price
 // e.g. calling song.title will return the song's title
 function songPurchased(song) {
+
 	// Set a 'Songs Played' count Super Property
 	var purchasedProperty = "Songs Purchased (Session)";
 	var songsPurchased = mixpanel.get_property(purchasedProperty);
 
-	if (songsPlayed !== 'undefined') {
+	if (songsPurchased == 'undefined') {
 		mixpanel.register_once({
-			purchasedProperty : 1
+			purchasedProperty : 1,
+			"Total Spent (Session)" : song.price
 		});
 	} else {
 		mixpanel.register({
-			purchasedProperty : songsPlayed + 1
+			purchasedProperty : songsPurchased + 1,
+			"Total Spent (Session)" : mixpanel.get_property("Total Spent (Session)") + song.price
 		});
 	};
 
 	mixpanel.people.set_once({
-		"Songs Purchased" : 0
+		"Songs Purchased" : 0,
+		"Total Spent" : 0
 	});
 
-	mixpanel.people.increment("Songs Purchased", 1)
+	mixpanel.people.increment({
+		"Songs Purchased" : 1, 
+		"Total Spent" : song.price
+	});
 
 	mixpanel.track("Purchased Song",{
 		"Title" : song.title,
 		"Artist" : song.artist,
-		"Genre" : song.genre
+		"Genre" : song.genre,
+		"Price" : song.price
 	});
 }
 
 // This function executes when a user upgrades from a Free plan to a Premium plan
 function planUpgraded() {
+	
+	const currentDate = new Date();
+	const timestamp = currentDate.getTime();
+
 	mixpanel.track("Upgraded Plan",{
-		
+		"Previous Plan" : mixpanel.get_property("Plan")
+	});
+
+	mixpanel.people.set({
+		"Plan" : "Premium",
+		"Last Upgraded" : timestamp
+	});
+
+	mixpanel.people.set_once({
+		"Times Upgraded" : 0
+	});
+
+	mixpanel.people.increment({
+		"Times Upgraded" : 1
+	});
+
+	mixpanel.register({
+		"Plan" : "Premium",
+		"Last Upgraded" : timestamp
 	});
 }
 
 // This function executes when a user downgrades from a Premium plan to a Free plan
 function planDowngraded() {
+
 	mixpanel.track("Downgraded Plan",{
-		
+		"Previous Plan" : mixpanel.get_property("Plan")
+	});
+
+	mixpanel.people.set({
+		"Plan" : "Free",
+		"Last Downgraded" : timestamp
+	});
+
+	mixpanel.people.set_once({
+		"Times Downgraded" : 0
+	});
+
+	mixpanel.people.increment({
+		"Times Downgraded" : 1
+	});
+
+	mixpanel.register({
+		"Plan" : "Free",
+		"Last Downgraded" : timestamp
 	});
 }
