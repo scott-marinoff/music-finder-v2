@@ -59,6 +59,14 @@ function login(user) {
 	mixpanel.track("Logged In");
 }
 
+// This function executes when a user successfully logs out
+// It clears super properties from the Mixpanel cookie
+function logout() {
+	mixpanel.track("Logged Out");
+
+	mixpanel.reset();
+}
+
 // This function executes every time a song is played
 // The "song" object contains the following properties: title, artist, genre, duration
 // e.g. calling song.title will return the song's title

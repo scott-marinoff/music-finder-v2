@@ -96,7 +96,7 @@ $(document).ready(function(){
 			success: function(data){
 
 				if (data.result == 0) {
-							alert("Server Error: please contact Big Tuna");
+					alert("Server Error: please contact Big Tuna");
 				}
 				else if (data.result == 2) {
 					alert("Invalid credentials. Please try again.");
@@ -141,7 +141,7 @@ $(document).ready(function(){
 			},
 			success: function (data) {
 				if (data.result == 0) {
-					alert("Server Error: please contact Neema");
+					alert("Server Error: please contact Big Tuna");
 				}
 				else if (data.result == 2) {
 					alert("Sorry, that email address has already been used.");
@@ -189,6 +189,7 @@ $(document).ready(function(){
 	}
 
 	$("#logoutButton").click(function(){
+		logout();
 		sessionStorage.removeItem("loggedIn");
 		setTimeout(function(){
 			window.location.replace("index.html");
