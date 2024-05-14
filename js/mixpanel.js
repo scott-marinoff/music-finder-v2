@@ -1,6 +1,6 @@
 // This function executes when a user loads the sign up page
 function signupPageViewed() {
-	
+
 	// Set a 'Signup Page Views' count Super Property
 	var pagesViewed = mixpanel.get_property('Signup Page Views (Session)')
 
@@ -76,16 +76,16 @@ function logout() {
 function songPlayed(song) {
 
 	// Set a 'Songs Played' count Super Property
-	var purchasedProperty = "Songs Played (Session)";
-	var songsPlayed = mixpanel.get_property(${purchasedProperty});
+	let purchasedProperty = "Songs Played (Session)";
+	let songsPlayed = mixpanel.get_property(purchasedProperty);
 
 	if (songsPlayed === 'undefined') {
 		mixpanel.register_once({
-			${purchasedProperty} : 1
+			purchasedProperty : 1
 		});
 	} else {
 		mixpanel.register({
-			${purchasedProperty} : songsPlayed + 1
+			purchasedProperty : songsPlayed + 1
 		});
 	};
 
