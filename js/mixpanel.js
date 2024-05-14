@@ -165,6 +165,9 @@ function planUpgraded() {
 
 // This function executes when a user downgrades from a Premium plan to a Free plan
 function planDowngraded() {
+	
+	const currentDate = new Date();
+	const timestamp = currentDate.getTime();
 
 	mixpanel.track("Downgraded Plan",{
 		"Previous Plan" : mixpanel.get_property('Plan')
