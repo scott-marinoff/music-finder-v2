@@ -189,12 +189,17 @@ $(document).ready(function(){
 	}
 
 	$("#logoutButton").click(function(){
-		logout();
+		sessionStorage.justLoggedOut = true;
 		sessionStorage.removeItem("loggedIn");
 		setTimeout(function(){
 			window.location.replace("index.html");
 		},333);
 	});
+
+	if (sessionStorage.justLoggedOut) {
+		sessionStorage.removeItem("justLoggedOut");
+		logout();
+	}
 
 	if (config.plan) {
 		if (sessionStorage.plan == "Premium") {
