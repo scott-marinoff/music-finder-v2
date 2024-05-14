@@ -102,7 +102,7 @@ function songPurchased(song) {
 
 	// Set a 'Songs Played' count Super Property
 	var purchasedProperty = "Songs Purchased (Session)";
-	var songsPurchased = mixpanel.get_property(purchasedProperty);
+	var songsPurchased = mixpanel.get_property('Songs Purchased (Session)');
 
 	if (songsPurchased === 'undefined') {
 		mixpanel.register_once({
@@ -112,7 +112,7 @@ function songPurchased(song) {
 	} else {
 		mixpanel.register({
 			purchasedProperty : songsPurchased + 1,
-			"Total Spent (Session)" : mixpanel.get_property("Total Spent (Session)") + song.price
+			"Total Spent (Session)" : mixpanel.get_property('Total Spent (Session)') + song.price
 		});
 	};
 
@@ -141,7 +141,7 @@ function planUpgraded() {
 	const timestamp = currentDate.getTime();
 
 	mixpanel.track("Upgraded Plan",{
-		"Previous Plan" : mixpanel.get_property("Plan")
+		"Previous Plan" : mixpanel.get_property('Plan')
 	});
 
 	mixpanel.people.set({
@@ -167,7 +167,7 @@ function planUpgraded() {
 function planDowngraded() {
 
 	mixpanel.track("Downgraded Plan",{
-		"Previous Plan" : mixpanel.get_property("Plan")
+		"Previous Plan" : mixpanel.get_property('Plan')
 	});
 
 	mixpanel.people.set({
