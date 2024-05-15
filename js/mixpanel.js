@@ -128,7 +128,7 @@ function songPurchased(song) {
 	console.log(songsPurchased);
 
 	// Add Songs Purchased and Total Spent as Super Properties
-	if (mixpanel.get_property("Songs Purchased (Session)"); === 'undefined') {
+	if (mixpanel.get_property("Songs Purchased (Session)") === 'undefined') {
 		mixpanel.register_once({
 			"Songs Purchased (Session)" : 1,
 			"Total Spent (Session)" : song.price
