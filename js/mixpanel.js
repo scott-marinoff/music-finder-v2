@@ -70,7 +70,7 @@ function login(user) {
 // It clears super properties from the Mixpanel cookie
 function logout() {
 
-	mixpanel.track("Logged Out");
+	await mixpanel.track("Logged Out");
 	mixpanel.reset();
 }
 
@@ -90,7 +90,7 @@ function songPlayed(song) {
 		});
 	} else {
 		mixpanel.register({
-			[playedProperty] : songsPlayed + 1
+			[playedProperty] : [songsPlayed] + 1
 		});
 	};
 
