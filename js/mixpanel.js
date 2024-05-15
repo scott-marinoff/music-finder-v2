@@ -22,12 +22,14 @@ function signupPageViewed() {
 // e.g. calling user.id will return the user's id
 function accountCreated(user) {
 
-	mixpanel.identify(user.id);
+	mixpanel.alias(user.id)
+	mixpanel.identify();
 
 	const currentDate = new Date();
 	const timestamp = currentDate.toISOString();
 
 	mixpanel.people.set({
+
 		"$name" : user.name,
 		"$email" : user.email,
 		"$created" : timestamp,
@@ -40,6 +42,7 @@ function accountCreated(user) {
 	});
 
 	mixpanel.register({
+		"User ID" : user.id,
 		"Plan" : user.plan,
 		"Preferred Genre" : user.favorite_genre
 	});
@@ -55,6 +58,7 @@ function login(user) {
 	mixpanel.identify(user.id);
 
 	mixpanel.register({
+		"User ID" : user.id,
 		"Plan" : user.plan,
 		"Preferred Genre" : user.favorite_genre
 	});
