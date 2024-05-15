@@ -86,11 +86,11 @@ function songPlayed(song) {
 	// Add Songs Played
 	if (songsPlayed === 'undefined') {
 		mixpanel.register_once({
-			[playedProperty] : 1
+			[playedProperty] : parseInt(1)
 		});
 	} else {
 		mixpanel.register({
-			[playedProperty] : [songsPlayed] + 1
+			[playedProperty] : parseInt([songsPlayed]) + 1
 		});
 	};
 
@@ -134,14 +134,14 @@ function songPurchased(song) {
 		mixpanel.register_once({
 			// Set 'Songs Purchased' and 'Total Spent'
 			[purchasedProperty] : 1,
-			[spentProperty] : song.price
+			[spentProperty] : parseInt(song.price)
 		});
 	} else {
 		// Purchases have already been made this session
 		mixpanel.register({
 			// Increment Songs Purchased and Total Spent
-			[purchasedProperty] : [songsPurchased] + 1,
-			[spentProperty] : [totalSpent] + song.price
+			[purchasedProperty] : parseInt([songsPurchased]) + 1,
+			[spentProperty] : parseInt([totalSpent]) + parseInt(song.price)
 		});
 	};
 
@@ -159,7 +159,7 @@ function songPurchased(song) {
 
 	mixpanel.people.increment({
 		"Songs Purchased" : 1, 
-		"Total Spent" : song.price
+		"Total Spent" : parseInt(song.price)
 	});
 
 	// Track song purchase event
@@ -167,7 +167,7 @@ function songPurchased(song) {
 		"Title" : song.title,
 		"Artist" : song.artist,
 		"Genre" : song.genre,
-		"Price" : song.price
+		"Price" : parseInt(song.price)
 	});
 }
 
