@@ -23,7 +23,7 @@ function signupPageViewed() {
 function accountCreated(user) {
 
 	mixpanel.alias(user.id)
-	mixpanel.identify(user.id);
+	mixpanel.identify();
 
 	const currentDate = new Date();
 	const timestamp = currentDate.toISOString();
