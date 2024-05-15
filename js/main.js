@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+	mixpanel.track_links('mixpanelLink', 'Clicked Mixpanel Link');
+
 	$("input").first().focus();
 
 	$(".playButton").click(function(){
