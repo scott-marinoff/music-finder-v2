@@ -22,6 +22,7 @@ function signupPageViewed() {
 // e.g. calling user.id will return the user's id
 function accountCreated(user) {
 
+	mixpanel.alias(user.id)
 	mixpanel.identify(user.id);
 
 	const currentDate = new Date();
@@ -80,16 +81,16 @@ function songPlayed(song) {
 
 	// Set a 'Songs Played' count Super Property
 	let playedProperty = "Songs Played (Session)";
-	let songsPlayed = mixpanel.get_property(playedProperty);
+	let songsPlayed = mixpanel.get_property([playedProperty]);
 
 	// Add Songs Played
 	if (songsPlayed === 'undefined') {
 		mixpanel.register_once({
-			playedProperty : 1
+			[playedProperty] : 1
 		});
 	} else {
 		mixpanel.register({
-			playedProperty : songsPlayed + 1
+			[playedProperty] : songsPlayed + 1
 		});
 	};
 
@@ -121,22 +122,26 @@ function songPlayed(song) {
 function songPurchased(song) {
 
 	// Set a 'Songs Purchased' count Super Property
-	// ** FIX ** For some reason, this doesn't seem to be working...
 	let purchasedProperty = "Songs Purchased (Session)";
-	console.log(purchasedProperty);
-	let songsPurchased = mixpanel.get_property(purchasedProperty);
-	console.log(songsPurchased);
+	let songsPurchased = mixpanel.get_property([purchasedProperty]);
+
+	let spentProperty = "Total Spent (Session)";
+	let totalSpent = mixpanel.get_property([spentProperty]);
 
 	// Add Songs Purchased and Total Spent as Super Properties
-	if (mixpanel.get_property("Songs Purchased (Session)") === 'undefined') {
+	if (songsPurchased === 'undefined') {
+		// No purchases made this session
 		mixpanel.register_once({
-			"Songs Purchased (Session)" : 1,
-			"Total Spent (Session)" : song.price
+			// Set 'Songs Purchased' and 'Total Spent'
+			[purchasedProperty] : 1,
+			[spentProperty] : song.price
 		});
 	} else {
+		// Purchases have already been made this session
 		mixpanel.register({
-			"Songs Purchased (Session)" : mixpanel.get_property("Songs Purchased (Session)") + 1,
-			"Total Spent (Session)" : mixpanel.get_property('Total Spent (Session)') + song.price
+			// Increment Songs Purchased and Total Spent
+			[purchasedProperty] : [songsPurchased] + 1,
+			[spentProperty] : [totalSpent] + song.price
 		});
 	};
 
@@ -180,8 +185,8 @@ function planUpgraded() {
 	// Track upgrade with previous plan and date last changed
 	// Will allow you to calc time between upgrade/downgrade
 	mixpanel.track("Upgraded Plan",{
-		"Upgraded From" : currentPlan,
-		"Last Upgraded" : lastChange
+		"Upgraded From" : [currentPlan],
+		"Last Upgraded" : [lastChange]
 	});
 
 	// Update user profile with new plan info
@@ -220,8 +225,8 @@ function planDowngraded() {
 	// Track downgrade with previous plan and date last changed
 	// Will allow you to calc time between upgrade/downgrade
 	mixpanel.track("Downgraded Plan",{
-		"Downgraded From" : currentPlan,
-		"Last Upgraded" : lastChange
+		"Downgraded From" : [currentPlan],
+		"Last Upgraded" : [lastChange]
 	});
 
 	// Update user profile with new plan info
