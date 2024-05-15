@@ -68,7 +68,7 @@ function login(user) {
 
 // This function executes when a user successfully logs out
 // It clears super properties from the Mixpanel cookie
-function logout() {
+async function logout() {
 
 	await mixpanel.track("Logged Out");
 	mixpanel.reset();
