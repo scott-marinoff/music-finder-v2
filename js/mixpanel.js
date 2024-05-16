@@ -86,6 +86,7 @@ function songPlayed(song) {
 	// Add Songs Played
 	if (songsPlayed === 'undefined') {
 		mixpanel.register_once({
+			// Why does MP interpret this as a String when it's clearly a Number?
 			[playedProperty] : parseInt(1)
 		});
 	} else {
@@ -102,7 +103,7 @@ function songPlayed(song) {
 
 	// Track songs played to profile
 	mixpanel.people.set_once({
-		"Songs Played" : 0
+		"Songs Played" : parseInt(0)
 	});
 
 	mixpanel.people.increment("Songs Played", 1);
@@ -133,7 +134,7 @@ function songPurchased(song) {
 		// No purchases made this session
 		mixpanel.register_once({
 			// Set 'Songs Purchased' and 'Total Spent'
-			[purchasedProperty] : 1,
+			[purchasedProperty] : parseInt(1),
 			[spentProperty] : parseInt(song.price)
 		});
 	} else {
@@ -153,12 +154,12 @@ function songPurchased(song) {
 
 	// Add count and cost of songs purchased to profile
 	mixpanel.people.set_once({
-		"Songs Purchased" : 0,
-		"Total Spent" : 0
+		"Songs Purchased" : parseInt(0),
+		"Total Spent" : parseInt(0)
 	});
 
 	mixpanel.people.increment({
-		"Songs Purchased" : 1, 
+		"Songs Purchased" : parseInt(1), 
 		"Total Spent" : parseInt(song.price)
 	});
 
@@ -197,11 +198,11 @@ function planUpgraded() {
 
 	// Track number of upgrades
 	mixpanel.people.set_once({
-		"Times Upgraded" : 0
+		"Times Upgraded" : parseInt(0)
 	});
 
 	mixpanel.people.increment({
-		"Times Upgraded" : 1
+		"Times Upgraded" : parseInt(1)
 	});
 
 	// Update cookie with new plan info
@@ -225,7 +226,7 @@ function planDowngraded() {
 	// Track downgrade with previous plan and date last changed
 	// Will allow you to calc time between upgrade/downgrade
 	mixpanel.track("Downgraded Plan",{
-		"Downgraded From" : [currentPlan],
+		"Downgraded From" : currentPlan,
 		"Last Upgraded" : [lastChange]
 	});
 
@@ -237,11 +238,11 @@ function planDowngraded() {
 
 	// Track number of downgrades
 	mixpanel.people.set_once({
-		"Times Downgraded" : 0
+		"Times Downgraded" : parseInt(0)
 	});
 
 	mixpanel.people.increment({
-		"Times Downgraded" : 1
+		"Times Downgraded" : parseInt(1)
 	});
 
 	// Update cookie with new plan info
