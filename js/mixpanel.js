@@ -2,7 +2,7 @@
 function signupPageViewed() {
 
 	// Set a 'Signup Page Views' count Super Property
-	await var pagesViewed = mixpanel.get_property('Signup Page Views (Session)');
+	let pagesViewed = mixpanel.get_property('Signup Page Views (Session)');
 
 	if (pagesViewed !== 'undefined') {
 		mixpanel.register_once({
