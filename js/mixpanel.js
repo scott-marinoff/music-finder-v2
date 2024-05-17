@@ -2,7 +2,7 @@
 function signupPageViewed() {
 
 	// Set a 'Signup Page Views' count Super Property
-	var pagesViewed = mixpanel.get_property('Signup Page Views (Session)')
+	await var pagesViewed = mixpanel.get_property('Signup Page Views (Session)');
 
 	if (pagesViewed !== 'undefined') {
 		mixpanel.register_once({
@@ -22,7 +22,7 @@ function signupPageViewed() {
 // e.g. calling user.id will return the user's id
 function accountCreated(user) {
 
-	mixpanel.alias(user.id)
+	mixpanel.alias(user.id);
 	mixpanel.identify();
 
 	const currentDate = new Date();
