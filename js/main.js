@@ -2,6 +2,8 @@ $(document).ready(function(){
 
 	mixpanel.track_links('#mixpanelLink', 'Clicked Mixpanel Link');
 
+
+
 	$("input").first().focus();
 
 	$(".playButton").click(function(){
@@ -211,6 +213,13 @@ $(document).ready(function(){
 			$("#downgradeButton").hide();
 		}
 	}
+
+	$('#changeGenre').change(function() {
+	    // Retrieve the selected value
+	    sessionStorage.genre = $(this).val();
+	    
+	    $('[data-genre="'+sessionStorage.genre+'"]').show();
+	});
 
 	if (sessionStorage.genre) {
 		$('[data-genre="'+sessionStorage.genre+'"]').show();
