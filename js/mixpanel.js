@@ -6,11 +6,11 @@ function signupPageViewed() {
 
 	if (pagesViewed !== 'undefined') {
 		mixpanel.register_once({
-			"Signup Page Views (Session)": 1
+			"Signup Page Views (Session)": parseInt(1)
 		});
 	} else {
 		mixpanel.register({
-			"Signup Page Views (Session)": pagesViewed + 1
+			"Signup Page Views (Session)": parseInt([pagesViewed]) + 1
 		});
 	}
 
