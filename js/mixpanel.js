@@ -2,17 +2,17 @@
 function signupPageViewed() {
 
 	// Set a 'Signup Page Views' count Super Property
-	// let pagesViewed = mixpanel.get_property('Signup Page Views (Session)');
+	// let pagesViewed = mixpanel.get_property("Signup Page Views (Session)");
 
-	// if (pagesViewed !== 'undefined') {
-	// 	mixpanel.register_once({
-	// 		"Signup Page Views (Session)": parseInt(1)
-	// 	});
-	// } else {
-	// 	mixpanel.register({
-	// 		"Signup Page Views (Session)": parseInt([pagesViewed]) + 1
-	// 	});
-	// }
+	if (mixpanel.get_property("Signup Page Views (Session)") === 'undefined') {
+		mixpanel.register_once({
+			"Signup Page Views (Session)": parseInt(1)
+		});
+	} else {
+		mixpanel.register({
+			"Signup Page Views (Session)": mixpanel.get_property("Signup Page Views (Session)") + 1
+		});
+	}
 
 	mixpanel.track("Viewed Signup Page");
 }
