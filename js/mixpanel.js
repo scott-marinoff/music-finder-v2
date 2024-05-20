@@ -22,7 +22,7 @@ function signupPageViewed() {
 // e.g. calling user.id will return the user's id
 function accountCreated(user) {
 
-	mixpanel.identify();
+	mixpanel.identify(user.id);
 
 	const currentDate = new Date();
 	const timestamp = currentDate.toISOString();
