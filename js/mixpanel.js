@@ -22,7 +22,6 @@ function signupPageViewed() {
 // e.g. calling user.id will return the user's id
 function accountCreated(user) {
 
-	mixpanel.alias(user.id);
 	mixpanel.identify();
 
 	const currentDate = new Date();
